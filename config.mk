@@ -9,10 +9,12 @@ ifndef MACHINE
         MACHINE:=x64
     else ifeq ($(MACHINE_RAW),amd64)
         MACHINE:=x64
-    else ifneq (,$(findstring arm, $(MACHINE_RAW)))
-        MACHINE:=arm
     else ifeq ($(MACHINE_RAW),aarch64)
         MACHINE:=aarch64
+    else ifeq ($(MACHINE_RAW),arm64)
+        MACHINE:=aarch64
+    else ifneq (,$(findstring arm, $(MACHINE_RAW)))
+        MACHINE:=arm
     else
         MACHINE:=x86
     endif
@@ -26,5 +28,5 @@ SOURCE_DIR?=src
 BUILD_DIR?=build
 DIST_DIR?=dist
 CONFIGURATION?=release
-CXXFLAGS?=-std=c++11 -fPIC -fvisibility=hidden -fvisibility-inlines-hidden -Wall -Werror -I$(SOURCE_DIR) -DMETAWEAR_DLL -DMETAWEAR_DLL_EXPORTS $(OPT_FLAGS)
+CXXFLAGS?=-std=c++11 -fPIC -fvisibility=hidden -fvisibility-inlines-hidden -Wall -Werror -Wno-deprecated-declarations -I$(SOURCE_DIR) -DMETAWEAR_DLL -DMETAWEAR_DLL_EXPORTS $(OPT_FLAGS)
 DBG?=gdb

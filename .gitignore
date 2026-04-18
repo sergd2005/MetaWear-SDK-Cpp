@@ -7,3 +7,4 @@
 /dist/
 *__pycache__*
 bindings/javascript/libmetawear-path.js
+build-cmake/
