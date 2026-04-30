@@ -67,3 +67,14 @@ LIB="$DIST_DIR/lib${APP_NAME}.${EXT}.${VERSION}"
 echo ""
 echo "Output library: $REPO_DIR/$LIB"
 ls -lh "$REPO_DIR/$DIST_DIR/"
+
+# Fix install name so dyld can locate the library via @rpath
+if [[ "$KERNEL" == "Darwin" ]]; then
+    SONAME="lib${APP_NAME}.${EXT}.$(echo "$VERSION" | cut -d. -f1)"
+    DYLIB="$REPO_DIR/$DIST_DIR/$SONAME"
+    if [[ -f "$DYLIB" ]]; then
+        echo ""
+        echo "==> Fixing install name: @rpath/$SONAME"
+        install_name_tool -id "@rpath/$SONAME" "$DYLIB"
+    fi
+fi
